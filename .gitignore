@@ -26,3 +26,18 @@ venvqrmenu/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Ignoring all unnecessary  frontend files
+qrmenu_frontend/.DS_Store
+qrmenu_frontend/.tern-project
+qrmenu_frontend/build/*
+qrmenu_frontend/node_modules/*
+qrmenu_frontend/dist/
+qrmenu_frontend/npm-debug.log*
+qrmenu_frontend/yarn-debug.log*
+qrmenu_frontend/yarn-error.log*
+qrmenu_frontend/test/unit/coverage/
+qrmenu_frontend/test/e2e/reports/
+qrmenu_frontend/selenium-debug.log
+qrmenu_frontend/package-lock.json
+qrmenu_frontend/tests/unit/coverage/
