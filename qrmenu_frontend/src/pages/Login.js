@@ -40,7 +40,7 @@ export default function Login() {
                                 />
                             </Form.Group>
                             <div className="d-grid gap-2 mt-3">
-                                <Button variant='standard' block onClick={onClick}>Sign In</Button>
+                                <Button variant='standard' onClick={onClick}>Sign In</Button>
                             </div>
                         </Card.Body>
                     </Card>
