@@ -61,3 +61,7 @@ export function register(username, password) {
         }
     )
 }
+
+export function fetchPlaces(token) {
+    return request("/api/places/", {token});
+}

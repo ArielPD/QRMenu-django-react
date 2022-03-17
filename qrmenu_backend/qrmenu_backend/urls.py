@@ -25,4 +25,5 @@ urlpatterns = [
     path('auth/', include('djoser.urls.authtoken')),
 
     path('api/places/', views.PlaceList.as_view(), name='place-list'),
+    path('api/placesList/', views.getPlaceList, name='place-list-all'),
 ]
