@@ -20,6 +20,10 @@ const MainLayout = ({ children }) => {
     const goToPlaces = () => {
         navigate('/places');
     }
+
+    const onRegister = () => {
+        navigate('/register');
+    }
   return (
      <>
         <Navbar bg="light" variant="light" className='mb-4'>
@@ -31,7 +35,10 @@ const MainLayout = ({ children }) => {
                 {auth.token ? (
                     <Nav.Link onClick={onSignOut}>Logout</Nav.Link>
                 ) : (
+                    <>
                     <Nav.Link onClick={onsignIn}>Login</Nav.Link>
+                    <Nav.Link onClick={onRegister}>Register</Nav.Link>
+                    </>
                 )}
                 
             </Nav>
