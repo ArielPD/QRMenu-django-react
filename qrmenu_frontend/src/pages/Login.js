@@ -1,16 +1,28 @@
-import { useState } from 'react'; 
-import { Button, Card, Col, Form, Row} from 'react-bootstrap';
+import { useState, useEffect, useContext} from 'react'; 
+import { Button, Card, Col, Form, Row, Spinner} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 import { signIn } from '../apis';
 import MainLayout from "../layouts/MainLayout";
+import AuthContext from '../contexts/AuthContext';
 
 export default function Login() {
     const [username, setUserName]=  useState("");
     const [password, setPassword] = useState("");
 
+    const auth = useContext(AuthContext);
+    const navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (auth.token) {
+            navigate('/places');
+        }
+    },[auth, navigate])
+
     const onClick = (e) => {
         e.preventDefault();
-        signIn(username, password);
+        auth.signIn(username, password, () => navigate('/places'));
     }
     return (
         <MainLayout>
@@ -40,7 +52,20 @@ export default function Login() {
                                 />
                             </Form.Group>
                             <div className="d-grid gap-2 mt-3">
-                                <Button variant='standard' onClick={onClick}>Sign In</Button>
+                                <Button variant='standard' onClick={onClick} disabled={auth.loading}>
+                                    {auth.loading? (
+                                        <Spinner 
+                                            variant="standard"
+                                            as="span"
+                                            animation="border"
+                                            size="sm"
+                                            role="status"
+                                            aria-hidden="true"
+                                        />
+                                    ) : (
+                                        "Sign In"
+                                    )}
+                                </Button>
                             </div>
                         </Card.Body>
                     </Card>
