@@ -6,10 +6,16 @@ const MainLayout = ({ children }) => {
     const onsignIn = () => {
         navigate('/login');
     }
+    const goToPlaces = () => {
+        navigate('/places');
+    }
   return (
      <>
         <Navbar bg="light" variant="light" className='mb-4'>
             <Navbar.Brand href="/">QR MENU</Navbar.Brand>
+            <Nav className="flex-grow-1 justify-content-end">
+                <Nav.Link onClick={goToPlaces}>Places</Nav.Link>
+            </Nav>
             <Nav className="flex-grow-1 justify-content-end">
                 <Nav.Link onClick={onsignIn}>Login</Nav.Link>
             </Nav>
