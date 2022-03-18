@@ -26,4 +26,11 @@ urlpatterns = [
 
     path('api/places/', views.PlaceList.as_view(), name='place-list'),
     path('api/placesList/', views.getPlaceList, name='place-list-all'),
+    path('api/places/<pk>', views.PlaceDetail.as_view()),
+
+    path('api/categories/', views.CategoryList.as_view()),
+    path('api/categories/<pk>', views.CategoryDetail.as_view()),
+
+    path('api/menu_items/', views.MenuItemList.as_view()),
+    path('api/menu_items/<pk>', views.MenuItemDetail.as_view()),
 ]
