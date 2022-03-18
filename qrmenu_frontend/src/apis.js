@@ -65,3 +65,7 @@ export function register(username, password) {
 export function fetchPlaces(token) {
     return request("/api/places/", {token});
 }
+
+export function addPlace(data, token) {
+    return request("/api/places/", { data, token, method: "POST"});
+}
