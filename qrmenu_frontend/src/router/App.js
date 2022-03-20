@@ -6,6 +6,7 @@ import { AuthProvider } from '../contexts/AuthContext';
 
 import Home from '../pages/Home';
 import Login from '../pages/Login';
+import Place from '../pages/Place';
 import Places from '../pages/Places';
 import Register from '../pages/Register';
 import PrivateRoute from './PrivateRoute';
@@ -21,6 +22,11 @@ const App = () => {
           <Route path='/places' element={
               <PrivateRoute> 
                 <Places />
+              </PrivateRoute>
+          }/>
+          <Route path='/places/:id' element={
+              <PrivateRoute> 
+                <Place />
               </PrivateRoute>
           }/>
         </Routes>
