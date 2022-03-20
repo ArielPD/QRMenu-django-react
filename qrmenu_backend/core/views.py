@@ -2,7 +2,7 @@ from django.shortcuts import render
 from rest_framework import generics, status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
-from . import models, serializers
+from . import models, serializers, permissions
 
 # Create your views here.
 class PlaceList(generics.ListCreateAPIView):
@@ -22,20 +22,25 @@ def getPlaceList(request):
 
 
 class PlaceDetail(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [permissions.IsOwnerOrReadOnly]
     serializer_class = serializers.PlaceDetailSerializer
     queryset = models.Place.objects.all()
 
 class CategoryList(generics.CreateAPIView):
+    permission_classes = [permissions.PlaceOwnerOrReadOnly]
     serializer_class = serializers.CategorySerializer
 
 class CategoryDetail(generics.UpdateAPIView, generics.DestroyAPIView):
+    permission_classes = [permissions.PlaceOwnerOrReadOnly]
     serializer_class = serializers.CategorySerializer
     queryset = models.Category.objects.all()
 
 class MenuItemList(generics.CreateAPIView):
+    permission_classes = [permissions.PlaceOwnerOrReadOnly]
     serializer_class = serializers.MenuItemSerializer
 
 class MenuItemDetail(generics.UpdateAPIView, generics.DestroyAPIView):
+    permission_classes = [permissions.PlaceOwnerOrReadOnly]
     serializer_class = serializers.MenuItemSerializer
     queryset = models.MenuItem.objects.all()
 
