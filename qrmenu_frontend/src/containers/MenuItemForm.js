@@ -30,7 +30,43 @@ export default function MenuItemForm({place, onDone}) {
             <Form.Group>
                 <Form.Label>Category</Form.Label>
                 <div className='d-flex align-items-center'>
+                    <Form.Control as="select" value={category} onChange={e => setCategory(e.target.value)}>
+                        <option />
+                        {place?.categories?.map(category => (
+                            <option key={category.id} value={category.id}>
+                                {category.name}
+                            </option>
+                        ))}
+                    </Form.Control>
+                    
+                    <Button  ref={target} variant="link" onClick={() => setCategoryformShow(true)}>
+                        <RiPlayListAddFill size={25}/>
+                    </Button>
 
+                    <Overlay 
+                        show={categoryFormShow} 
+                        target={target.current} 
+                        placement="bottom" 
+                        rootClose 
+                        onHide={() => setCategoryformShow(false)}
+                    >
+                        <Popover id='popover-contained'>
+                            <Popover.Header as="h3">Category</Popover.Header>
+                            <Popover.Body>
+                                <Form.Group>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Category Name"
+                                        value={categoryName}
+                                        onChange={ e => setCategoryName(e.target.value)}
+                                    />
+                                    <Button variant="standard" style={{width:'100%', marginTop: '5px'}} onClick={onAddCategory}>
+                                        Add Category
+                                    </Button>
+                                </Form.Group>
+                            </Popover.Body>
+                        </Popover>
+                    </Overlay>
                 </div>
             </Form.Group>
         </div>

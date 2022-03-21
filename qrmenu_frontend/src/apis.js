@@ -88,5 +88,5 @@ export function fetchPlace(id, token) {
 }
 
 export function addCategory(data, token) {
-    return request("/api/categories", { data, token, methold: "POST"});
+    return request("/api/categories/", { data, token, method: "POST"});
 }
