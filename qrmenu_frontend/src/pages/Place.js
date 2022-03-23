@@ -2,9 +2,10 @@ import { useState, useEffect, useContext } from 'react';
 import {Row, Col, Button, Modal} from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoMdArrowBack} from 'react-icons/io';
+import { AiOutlineDelete } from 'react-icons/ai'
 import styled from 'styled-components';
 
-import { fetchPlace, fetchPlaces } from '../apis';
+import { fetchPlace, removePlace, removeCategory, removeMenuItem } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
@@ -43,17 +44,41 @@ const Place = () => {
   useEffect(() => {
     onFetchPlace();
   }, []);
+
+  const onRemovePlace = () => {
+      const c = window.confirm("Are you sure?");
+      if (c) {
+        removePlace(params.id, auth.token).then(onBack);
+      }
+  };
+
+  const onRemoveCategory = (id) => {
+      const c = window.confirm("Are you sure?");
+      if (c) {
+        removeCategory(id, auth.token).then(onFetchPlace());
+      }
+  };
+
+  const onRemoveMenuItem = (id) => {
+      const c = window.confirm("Are you sure?");
+      if (c) {
+        removeMenuItem(id, auth.token).then(onFetchPlace());
+      }
+  };
   
   return (
     <MainLayout>
         <Row>
             <Col lg={12}>
                 <div className='mb-4'>
-                    <div className='d-flix align-items-center'>
+                    <div className='d-flex align-items-center'>
                         <Button variant="link" onClick={onBack}>
                             <IoMdArrowBack size={25} color="black"/>
                         </Button>
                         <h3 className='mb-0 ml-2 mr-2'>{place.name}</h3>
+                        <Button variant="link" onClick={() => onRemovePlace()}>
+                            <AiOutlineDelete size={25} color="red"/>
+                        </Button>
                     </div>
                 </div>
             </Col>
@@ -65,9 +90,14 @@ const Place = () => {
             <Col md={8}>
                 {place?.categories?.map((category) => (
                     <div key={category.id} className="mb-5">
-                        <h4 className='mb-0 mr-2'>
-                            <b>{category.name}</b>
-                        </h4>
+                        <div className='d-flex align-center-items mb-4'>
+                            <h4 className='mb-0 mr-2'>
+                                <b>{category.name}</b>
+                            </h4>
+                            <Button variant="link" onClick={() => onRemoveCategory(category.id)}>
+                                <AiOutlineDelete size={25} color="red"/>
+                            </Button>
+                        </div>
                         {category?.menu_items.map((item) => (
                             <MenuItem 
                                 key={item.id} 
@@ -75,6 +105,10 @@ const Place = () => {
                                 onEdit = {() => {
                                     setSelectedItem(item);
                                     showModal();
+                                }}
+                                onRemove={() => {
+                                    onFetchPlace();
+                                    onRemoveMenuItem(item.id);
                                 }}
                             />
                         ))}
