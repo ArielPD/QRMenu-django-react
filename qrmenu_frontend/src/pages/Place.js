@@ -2,7 +2,7 @@ import { useState, useEffect, useContext } from 'react';
 import {Row, Col, Button, Modal} from 'react-bootstrap';
 import { useParams, useNavigate } from 'react-router-dom';
 import { IoMdArrowBack} from 'react-icons/io';
-import { AiOutlineDelete } from 'react-icons/ai'
+import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai'
 import styled from 'styled-components';
 
 import { fetchPlace, removePlace, removeCategory, removeMenuItem } from '../apis';
@@ -10,6 +10,7 @@ import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
 import MenuItem from '../components/MenuItem';
+import QRCodeModal from '../components/QRCodeModal';
 
 const Panel = styled.div`
     background-color: white;
@@ -22,6 +23,7 @@ const Place = () => {
     const [place, setPlace] = useState({});
     const [menuItemFormShow, setMenuItemFormShow]=useState(false);
     const [selectedItem, setSelectedItem] = useState(null);
+    const [qrCode, setQrCode] = useState(false);
 
     const params = useParams();
     const navigate = useNavigate();
@@ -29,6 +31,9 @@ const Place = () => {
 
     const showModal = () =>  setMenuItemFormShow(true);
     const hideModal = () =>  setMenuItemFormShow(false);
+
+    const showQRModal = () => setQrCode(true);
+    const hideQRModal = () => setQrCode(false);
 
     const onBack = () => {
         navigate('/places');
@@ -71,7 +76,7 @@ const Place = () => {
         <Row>
             <Col lg={12}>
                 <div className='mb-4'>
-                    <div className='d-flex align-items-center'>
+                    <div className='d-flex  justify-content-between align-items-center mb-4'>
                         <Button variant="link" onClick={onBack}>
                             <IoMdArrowBack size={25} color="black"/>
                         </Button>
@@ -80,6 +85,9 @@ const Place = () => {
                             <AiOutlineDelete size={25} color="red"/>
                         </Button>
                     </div>
+                    <Button variant="link" onClick={showQRModal}>
+                        <AiOutlineQrcode size={25} />
+                    </Button>
                 </div>
             </Col>
             <Col md={4}>
@@ -131,6 +139,9 @@ const Place = () => {
                />
            </Modal.Body>              
         </Modal>
+
+        <QRCodeModal show={qrCode} onHide={hideQRModal} place={place} />
+
     </MainLayout>
   )
 }
