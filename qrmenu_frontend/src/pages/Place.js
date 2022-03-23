@@ -5,7 +5,13 @@ import { IoMdArrowBack} from 'react-icons/io';
 import { AiOutlineDelete, AiOutlineQrcode } from 'react-icons/ai'
 import styled from 'styled-components';
 
-import { fetchPlace, removePlace, removeCategory, removeMenuItem } from '../apis';
+import { 
+    fetchPlace, 
+    removePlace, 
+    removeCategory, 
+    removeMenuItem, 
+    updatePlace
+} from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import MainLayout from '../layouts/MainLayout';
 import MenuItemForm from '../containers/MenuItemForm';
@@ -70,6 +76,16 @@ const Place = () => {
         removeMenuItem(id, auth.token).then(onFetchPlace());
       }
   };
+
+  const onUpdatePlace = (tables) => {
+    updatePlace(place.id, { number_of_tables : tables}, auth.token).then(
+        (json) => {
+            if (json) {
+                setPlace(json);
+            }
+        }
+    );
+  }
   
   return (
     <MainLayout>
@@ -140,7 +156,12 @@ const Place = () => {
            </Modal.Body>              
         </Modal>
 
-        <QRCodeModal show={qrCode} onHide={hideQRModal} place={place} />
+        <QRCodeModal 
+            show={qrCode} 
+            onHide={hideQRModal} 
+            place={place} 
+            onUpdatePlace={onUpdatePlace}
+        />
 
     </MainLayout>
   )
