@@ -23,7 +23,7 @@ class PlaceOwnerOrReadOnly(permissions.BasePermission):
             return True
 
         # Instance must have an attribute named `owner` of the place.
-        return obj.owner == request.user
+        return obj.place.owner == request.user
 
     def has_permission(self, request, view):
         try:
