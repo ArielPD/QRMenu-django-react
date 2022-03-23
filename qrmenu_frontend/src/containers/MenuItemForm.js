@@ -7,18 +7,20 @@ import { addCategory, addMenuItems } from '../apis';
 import AuthContext from '../contexts/AuthContext';
 import ImageDropzone from './ImageDropzone';
 
-export default function MenuItemForm({place, onDone}) {
+export default function MenuItemForm({place, onDone, item = {} }) {
     const [categoryName, setCategoryName] = useState("");
     const [categoryFormShow, setCategoryformShow] = useState(false);
     const target = useRef(null);
 
-    const [name, setName] = useState("");
-    const [price, setPrice] = useState(0);
-    const [description, setDescription] = useState("");
-    const [image, setImage] = useState("");
-    const [isAvailable, setIsAvailable] = useState(true);
+    const [category, setCategory] = useState(item.category);
+    const [name, setName] = useState(item.name);
+    const [price, setPrice] = useState(item.price || 0);
+    const [description, setDescription] = useState(item.description);
+    const [image, setImage] = useState(item.image);
+    const [isAvailable, setIsAvailable] = useState(
+        item.is_available === undefined ? true : !!item.is_available
+    );
 
-    const [category, setCategory] = useState("");
     const auth = useContext(AuthContext);
 
     const onAddCategory = async () => {

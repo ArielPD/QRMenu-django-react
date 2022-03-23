@@ -8,10 +8,10 @@ const Container = styled.div`
     border-radius: 5px;
     margin-bottom: 30px;
     box-shadow: 1px 1px  8px rgba(0,0,0,0.1)
-    display: flex;
+    //display: flex;
     opacity: ${({active}) => (active ? 1: 0.6)};
     > div:first-child {
-        width: 40%;
+        //width: 40%;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         background-size: cover;
@@ -24,9 +24,9 @@ const Container = styled.div`
 
 const MenuItem = ({ item, onEdit }) => {
   return (
-    <Container active={item.is_available}>
-      <Col xs={5} style={{ backgroundImage: `url(${item.image})`}} />
-      <Col xs={7} className="d-flex flex-column justify-content-between w-100">
+    <Container active={item.is_available} style={{ display: 'flex'}}>
+      <Col xs={5} style={{ backgroundImage: `url(${item.image})`, height: '150px', width: '40%'}} />
+      <Col xs={7} className="d-flex flex-column justify-content-between">
          <div>
            <div  className="d-flex justify-content-between align-items-center mb-2">
               <h4 className='mb-2'><b>{item.name}</b></h4>
